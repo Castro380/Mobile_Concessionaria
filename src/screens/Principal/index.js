@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ImageBackground, Button } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity , Button } from 'react-native'
 import React from 'react'
 import imagem from '../../../assets/concessionaria.webp'
 
@@ -7,9 +7,21 @@ export default function Principal({navigation}) {
     <View style={styles.container}>
     <ImageBackground source={imagem} resizeMode="cover" style={styles.image}>
         <View style={styles.botoes}>
-            <Button style={styles.text} title='Cadastro de carros' onPress={() => navigation.navigate('Carros')} />
-            <Button style={styles.text} title='Cadastro de carros' />
-            <Button style={styles.text} title='Cadastro de carros' />
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Cadastro')}>
+            <Text style={styles.text}>Cadastro</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Carros')}>
+            <Text style={styles.text}>Carros</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Carros')}>
+            <Text style={styles.text}>Acessorios</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Carros')}>
+            <Text style={styles.text}>Revisao</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Leiloes')}>
+            <Text style={styles.text}>Leiloes</Text>
+          </TouchableOpacity>
         </View>
     </ImageBackground>
   </View>
@@ -25,18 +37,26 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    button: {
+      backgroundColor: '#000',
+      marginTop: 20,
+
+      width: 210,
+      height: 50,
+      borderRadius: 15,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
     text: {
       color: 'white',
-      fontSize: 42,
-      lineHeight: 84,
+      fontSize: 20,
       fontWeight: 'bold',
-      textAlign: 'center',
-      backgroundColor: '#000000c0',
-      borderRadius: 15,
-      width: '50%'
+      textAlign: 'center', 
     },
     botoes: {
-        marginTop: 500,
+        marginTop: 400,
         gap: 10
-    }
+    }, 
+
+    
   });
