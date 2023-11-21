@@ -1,10 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack'
-import FormCarros from './FormCarro'
-import ListaCarros from './ListaCarro'
+import FormRevisoes from './FormRevisao'
+import ListaRevisoes from './ListaRevisao'
+
 
 const Stack = createStackNavigator()
 
-export default function StackCarro() {
+export default function StackRevisao() {
     return (
 
         <Stack.Navigator
@@ -12,8 +13,8 @@ export default function StackCarro() {
             initialRouteName='ListaCarros'
         >
 
-            <Stack.Screen name='ListaCarros' component={ListaCarros} />
-            <Stack.Screen name='FormCarros' component={FormCarros} />
+            <Stack.Screen name='ListaRevisao' component={ListaRevisoes} />
+            <Stack.Screen name='FormRevisao' component={FormRevisoes} />
 
 
         </Stack.Navigator>

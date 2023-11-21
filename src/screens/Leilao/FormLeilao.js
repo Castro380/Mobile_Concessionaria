@@ -104,6 +104,7 @@ export default function FormLeiloes({ navigation, route }) {
 
               <TextInput
                 style={styles.input}
+                keyboardType='numeric'
                 mode='outlined'
                 label='Contato'
                 value={values.contato}
@@ -114,6 +115,7 @@ export default function FormLeiloes({ navigation, route }) {
 
               <TextInput
                 style={styles.input}
+                keyboardType='numeric'
                 mode='outlined'
                 label='Valor'
                 value={values.valor}
@@ -158,7 +160,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    margin: 10,
+    margin: 10, marginTop: 50
   },
   inputContainer: {
     width: '90%',

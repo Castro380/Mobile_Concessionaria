@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
@@ -16,6 +17,7 @@ export default function FormUsuario({ navigation, route }) {
   const [cep, setCEP] = useState('');
   const [bairro, setBairro] = useState('');
   const [cidade, setCidade] = useState('');
+  const [endereco, setEndereco] = useState('');
   const [estado, setEstado] = useState('');
 
   const validationSchema = Yup.object().shape({
@@ -58,6 +60,23 @@ export default function FormUsuario({ navigation, route }) {
 
     navigation.goBack();
   }
+
+  async function buscarCEP(cep) {
+    try {
+        const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+        const { data } = response
+
+        if (!data.erro) {
+            setBairro(data.bairro)
+            setCidade(data.localidade)
+            setEstado(data.uf)
+        } else {
+            setEndereco({})
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
   return (
     <View style={styles.container}>
@@ -104,6 +123,7 @@ export default function FormUsuario({ navigation, route }) {
                 value={values.cpf}
                 onChangeText={handleChange('cpf')}
                 onBlur={handleBlur('cpf')}
+                
                 error={touched.cpf && errors.cpf ? true : false}
                 render={props => 
                     <TextInputMask 
@@ -149,15 +169,19 @@ export default function FormUsuario({ navigation, route }) {
                 <Text style={styles.errorText}>{errors.email}</Text>
               )}
 
-            <TextInput
-                style={styles.input}
-                mode="outlined"
-                label="Cep"
-                value={values.cep}
-                onChangeText={handleChange('cep')}
-                onBlur={handleBlur('cep')}
-                error={touched.cep && errors.cep ? true : false}
-              />
+  <TextInput
+    style={styles.input}
+    mode="outlined"
+    label="Cep"
+    keyboardType='numeric'
+    value={values.cep}
+    onChangeText={handleChange('cep')}
+    onBlur={() => {
+      handleBlur('cep');
+      buscarCEP(values.cep);
+    }}
+    error={touched.cep && errors.cep ? true : false}
+  />
 
               {touched.cep && errors.cep && (
                 <Text style={styles.errorText}>{errors.cep}</Text>

@@ -71,8 +71,11 @@ export default function ListaLeiloes({ navigation, route }) {
             <Card.Content style={styles.cardContent}>
               <View style={{ flex: 1 }}>
                 <Text variant='titleMedium'>{item?.marca}</Text>
-                <Text variant='bodyLarge'>Modelo: {item?.modelo}</Text>
-                <Text variant='bodyLarge'>Cor: {item?.cor}</Text>
+                <Text variant='bodyLarge'>Carro: {item?.carro}</Text>
+                <Text variant='bodyLarge'>Imagem: {item?.imagem}</Text>
+                <Text variant='bodyLarge'>Nome Vendedor: {item?.vendedor}</Text>
+                <Text variant='bodyLarge'>Contato: {item?.contato}</Text>
+                <Text variant='bodyLarge'>Valor: {item?.valor}</Text>
                 {/* Adicione mais informações sobre os leilões aqui */}
               </View>
             </Card.Content>

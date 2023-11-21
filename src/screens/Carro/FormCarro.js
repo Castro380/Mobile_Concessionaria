@@ -11,19 +11,19 @@ export default function FormCarrosFormularioAltoNivel({ navigation, route }) {
 
     const [marca, setMarca] = useState('')
     const [modelo, setModelo] = useState('')
-    const [ano, setAno] = useState('')
+    const [cor, setCor] = useState('')
 
     const validationSchema = Yup.object().shape({
         marca: Yup.string().required('Campo obrigatório!'),
         modelo: Yup.string().required('Campo obrigatório!'),
-        ano: Yup.string().required('Campo obrigatório!'),
+        cor: Yup.string().required('Campo obrigatório!'),
     })
 
     useEffect(() => {
         if (carroAntigo) {
             setMarca(carroAntigo.marca)
             setModelo(carroAntigo.modelo)
-            setAno(carroAntigo.ano)
+            setCor(carroAntigo.cor)
         }
     }, [])
     
@@ -54,7 +54,7 @@ export default function FormCarrosFormularioAltoNivel({ navigation, route }) {
                 initialValues={{
                     marca: marca,
                     modelo: modelo,
-                    ano: ano,
+                    cor: cor,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={values => salvar(values)}
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'bold',
-        margin: 10
+        margin: 10, marginTop: 50
     },
     inputContainer: {
         width: '90%',

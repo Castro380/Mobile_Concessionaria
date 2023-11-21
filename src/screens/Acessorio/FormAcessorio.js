@@ -5,40 +5,40 @@ import { Button, Text, TextInput } from 'react-native-paper'
 import Toast from 'react-native-toast-message'
 import * as Yup from 'yup'
 
-export default function FormCarrosFormularioAltoNivel({ navigation, route }) {
+export default function FormAcessorios({ navigation, route }) {
 
-    const { acao, carro: carroAntigo } = route.params
+    const { acao, acessorio: acessorioAntigo } = route.params
 
-    const [marca, setMarca] = useState('')
-    const [modelo, setModelo] = useState('')
-    const [ano, setAno] = useState('')
+    const [manta, setManta] = useState('')
+    const [sensor, setSensor] = useState('')
+    const [calota, setCalota] = useState('')
 
     const validationSchema = Yup.object().shape({
-        marca: Yup.string().required('Campo obrigatório!'),
-        modelo: Yup.string().required('Campo obrigatório!'),
-        ano: Yup.string().required('Campo obrigatório!'),
+        manta: Yup.string().required('Campo obrigatório!'),
+        sensor: Yup.string().required('Campo obrigatório!'),
+        calota: Yup.string().required('Campo obrigatório!'),
     })
 
     useEffect(() => {
-        if (carroAntigo) {
-            setMarca(carroAntigo.marca)
-            setModelo(carroAntigo.modelo)
-            setAno(carroAntigo.ano)
+        if (acessorioAntigo) {
+            setManta(acessorioAntigo.manta)
+            setSensor(acessorioAntigo.sensor)
+            setCalota(acessorioAntigo.calota)
         }
     }, [])
     
-    function salvar(novoCarro) {
-        console.log('SALVAR DADOS NOVO CARRO -> ', novoCarro)
+    function salvar(novoAcessorio) {
+        console.log('SALVAR DADOS NOVO ACESSÓRIO -> ', novoAcessorio)
 
-        if (carroAntigo) {
-            acao(carroAntigo, novoCarro)
+        if (acessorioAntigo) {
+            acao(acessorioAntigo, novoAcessorio)
         } else {
-            acao(novoCarro)
+            acao(novoAcessorio)
         }
 
         Toast.show({
             type: 'success',
-            text1: 'Carro salvo com sucesso!'
+            text1: 'Acessório salvo com sucesso!'
         })
 
         navigation.goBack()
@@ -47,14 +47,14 @@ export default function FormCarrosFormularioAltoNivel({ navigation, route }) {
     return (
         <View style={styles.container}>
 
-            <Text variant='titleLarge' style={styles.title}>{carroAntigo ? 'Editar Carro' : 'Adicionar Carro'}</Text>
+            <Text variant='titleLarge' style={styles.title}>{acessorioAntigo ? 'Editar Acessório' : 'Adicionar Acessório'}</Text>
 
             <Formik
                 enableReinitialize={true}
                 initialValues={{
-                    marca: marca,
-                    modelo: modelo,
-                    ano: ano,
+                    manta: manta,
+                    sensor: sensor,
+                    calota: calota,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={values => salvar(values)}
@@ -66,37 +66,45 @@ export default function FormCarrosFormularioAltoNivel({ navigation, route }) {
                             <TextInput
                                 style={styles.input}
                                 mode='outlined'
-                                label='Marca'
-                                value={values.marca}
-                                onChangeText={handleChange('marca')}
-                                onBlur={handleBlur('marca')}
-                                error={errors.marca ? true : false}
+                                keyboardType='numeric'
+                                label='Marca refletiva'
+                                value={values.manta}
+                                onChangeText={handleChange('manta')}
+                                onBlur={handleBlur('manta')}
+                                error={errors.manta ? true : false}
                             />
 
-                            {touched.marca && errors.marca && (
-                                <Text style={{ color: 'red', textAlign: 'center' }}>{errors.marca}</Text>
+                            {touched.manta && errors.manta && (
+                                <Text style={{ color: 'red', textAlign: 'center' }}>{errors.manta}</Text>
                             )}
 
                             <TextInput
                                 style={styles.input}
                                 mode='outlined'
-                                label='Modelo'
-                                value={values.modelo}
-                                onChangeText={handleChange('modelo')}
-                                onBlur={handleBlur('modelo')}
+                                label='Sensor de Ré'
+                                keyboardType='numeric'
+                                value={values.sensor}
+                                onChangeText={handleChange('sensor')}
+                                onBlur={handleBlur('sensor')}
                             />
+                            
+                            {touched.sensor && errors.sensor && (
+                                <Text style={{ color: 'red', textAlign: 'center' }}>{errors.sensor}</Text>
+                            )}
 
                             <TextInput
                                 style={styles.input}
                                 mode='outlined'
-                                label='Cor'
-                                value={values.cor}
-                                onChangeText={handleChange('cor')}
-                                onBlur={handleBlur('cor')}
+                                keyboardType='numeric'
+                                label='Calota'
+                                value={values.calota}
+                                onChangeText={handleChange('calota')}
+                                onBlur={handleBlur('calota')}
                             />
 
-                            {/* Adicione outros campos do carro conforme necessário */}
-
+                            {touched.sensor && errors.sensor && (
+                                <Text style={{ color: 'red', textAlign: 'center' }}>{errors.sensor}</Text>
+                            )}
                         </View>
 
                         <View style={styles.buttonContainer}>
@@ -136,7 +144,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'bold',
-        margin: 10
+        margin: 10,
+        marginTop: 50
     },
     inputContainer: {
         width: '90%',

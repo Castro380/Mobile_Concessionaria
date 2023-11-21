@@ -13,10 +13,10 @@ export default function Principal({navigation}) {
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Carros')}>
             <Text style={styles.text}>Carros</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Carros')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Acessorios')}>
             <Text style={styles.text}>Acessorios</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Carros')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Revisao')}>
             <Text style={styles.text}>Revisao</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Leiloes')}>
