@@ -13,7 +13,7 @@ export default function StackConcessionaria() {
 
         <Stack.Navigator
             screenOptions={{ headerShown: false }}
-            initialRouteName='Home'
+            initialRouteName='Loader'
         >
 
             <Stack.Screen name='Home' component={Principal} />

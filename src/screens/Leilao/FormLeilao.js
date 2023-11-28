@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 import { Button, Text, TextInput } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import * as Yup from 'yup';
@@ -68,7 +69,7 @@ export default function FormLeiloes({ navigation, route }) {
       >
         {({ handleChange, handleBlur, handleSubmit, touched, errors, values }) => (
           <>
-            <View style={styles.inputContainer}>
+            <ScrollView style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 mode='outlined'
@@ -107,7 +108,7 @@ export default function FormLeiloes({ navigation, route }) {
                 error={errors.nomeVendedor ? true : false}
               />
 
-{touched.nomeVendedor && errors.nomeVendedor && (
+              {touched.nomeVendedor && errors.nomeVendedor && (
                 <Text style={{ color: 'red', textAlign: 'center' }}>{errors.nomeVendedor}</Text>
               )}
 
@@ -120,11 +121,18 @@ export default function FormLeiloes({ navigation, route }) {
                 onChangeText={handleChange('contato')}
                 onBlur={handleBlur('contato')}
                 error={errors.contato ? true : false}
-              />
+                render={props =>
+                  <TextInputMask
+                    {...props}
+                    type={'cel-phone'}
+                  />
+                }
+              />  
 
-{touched.contato && errors.contato && (
+              {touched.contato && errors.contato && (
                 <Text style={{ color: 'red', textAlign: 'center' }}>{errors.contato}</Text>
               )}
+
               <TextInput
                 style={styles.input}
                 keyboardType='numeric'
@@ -134,13 +142,26 @@ export default function FormLeiloes({ navigation, route }) {
                 onChangeText={handleChange('valor')}
                 onBlur={handleBlur('valor')}
                 error={errors.valor ? true : false}
+                render={props =>
+                  <TextInputMask
+                    {...props}
+                    type={'money'}
+                    options={{
+                      precision: 2,
+                      separator: ',',
+                      delimiter: '.',
+                      unit: 'R$',
+                      suffixUnit: ''
+                    }}
+                  />
+                }
               />
 
-{touched.valor && errors.valor && (
+              {touched.valor && errors.valor && (
                 <Text style={{ color: 'red', textAlign: 'center' }}>{errors.valor}</Text>
               )}
 
-            </View>
+            </ScrollView>
 
             <View style={styles.buttonContainer}>
               <Button

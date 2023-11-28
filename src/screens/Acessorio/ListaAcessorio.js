@@ -81,7 +81,7 @@ export default function ListaAcessorios({ navigation, route }) {
               style={styles.cardContent}
             >
               <View style={{ flex: 1 }}>
-                <Text variant='bodyLarge'>Manta: {item?.manda}</Text> 
+                <Text variant='bodyLarge'>Manta: {item?.manta}</Text> 
                 <Text variant='titleMedium'>Sensor:{item?.sensor}</Text>
                 <Text variant='bodyLarge'>Calota: {item?.calota}</Text>
               </View>

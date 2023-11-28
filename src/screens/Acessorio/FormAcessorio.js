@@ -67,7 +67,7 @@ export default function FormAcessorios({ navigation, route }) {
                                 style={styles.input}
                                 mode='outlined'
                                 keyboardType='numeric'
-                                label='Marca refletiva'
+                                label='Manta refletiva'
                                 value={values.manta}
                                 onChangeText={handleChange('manta')}
                                 onBlur={handleBlur('manta')}

@@ -136,7 +136,7 @@ export default function FormRevisoes({ navigation, route }) {
                         <TextInput
                                 style={styles.input}
                                 mode="outlined"
-                                label="Telefone"
+                                label="Data"
                                 value={values.data}
                                 onChangeText={handleChange('data')}
                                 onBlur={handleBlur('data')}

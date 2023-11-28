@@ -14,11 +14,13 @@ export default function FormUsuario({ navigation, route }) {
   const [cpf, setCPF] = useState('');
   const [telefone, setTelefone] = useState('');
   const [email, setEmail] = useState('');
+  const [enderecoInfo, setEnderecoInfo] = useState({
+    bairro: '',
+    cidade: '',
+    estado: '',
+  });
+
   const [cep, setCEP] = useState('');
-  const [bairro, setBairro] = useState('');
-  const [cidade, setCidade] = useState('');
-  const [endereco, setEndereco] = useState('');
-  const [estado, setEstado] = useState('');
 
   const validationSchema = Yup.object().shape({
     nomeCompleto: Yup.string().required('Campo obrigatório!'),
@@ -38,11 +40,40 @@ export default function FormUsuario({ navigation, route }) {
       setTelefone(usuarioAntigo.telefone || '');
       setEmail(usuarioAntigo.email || '');
       setCEP(usuarioAntigo.cep || '');
-      setBairro(usuarioAntigo.bairro || '');
-      setCidade(usuarioAntigo.cidade || '');
-      setEstado(usuarioAntigo.estado || '');
+      setEnderecoInfo({
+        bairro: usuarioAntigo.bairro || '',
+        cidade: usuarioAntigo.cidade || '',
+        estado: usuarioAntigo.estado || '',
+      });
     }
   }, [usuarioAntigo]);
+
+  async function buscarCEP(cep) {
+    try {
+      const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+      const { data } = response;
+
+      if (!data.erro) {
+        setEnderecoInfo({
+          ...enderecoInfo,
+          bairro: data.bairro || enderecoInfo.bairro,
+          cidade: data.localidade || enderecoInfo.cidade,
+          estado: data.uf || enderecoInfo.estado,
+        });
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'CEP não encontrado!',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      Toast.show({
+        type: 'error',
+        text1: 'Erro ao buscar o CEP!',
+      });
+    }
+  }
 
   function salvar(novoUsuario) {
     console.log('SALVAR DADOS NOVO USUÁRIO -> ', novoUsuario);
@@ -61,23 +92,6 @@ export default function FormUsuario({ navigation, route }) {
     navigation.goBack();
   }
 
-  async function buscarCEP(cep) {
-    try {
-        const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
-        const { data } = response
-
-        if (!data.erro) {
-            setBairro(data.bairro)
-            setCidade(data.localidade)
-            setEstado(data.uf)
-        } else {
-            setEndereco({})
-        }
-    } catch (error) {
-        console.log(error)
-    }
-}
-
   return (
     <View style={styles.container}>
       <Text variant="titleLarge" style={styles.title}>
@@ -92,9 +106,9 @@ export default function FormUsuario({ navigation, route }) {
           telefone: telefone,
           email: email,
           cep: cep,
-          bairro: bairro,
-          cidade: cidade,
-          estado: estado,
+          bairro: enderecoInfo.bairro,
+          cidade: enderecoInfo.cidade,
+          estado: enderecoInfo.estado,
         }}
         validationSchema={validationSchema}
         onSubmit={(values) => salvar(values)}
@@ -102,7 +116,7 @@ export default function FormUsuario({ navigation, route }) {
         {({ handleChange, handleBlur, handleSubmit, touched, errors, values }) => (
           <>
             <ScrollView style={styles.inputContainer}>
-              <TextInput
+            <TextInput
                 style={styles.input}
                 mode="outlined"
                 label="Nome Completo"
@@ -169,19 +183,19 @@ export default function FormUsuario({ navigation, route }) {
                 <Text style={styles.errorText}>{errors.email}</Text>
               )}
 
-  <TextInput
-    style={styles.input}
-    mode="outlined"
-    label="Cep"
-    keyboardType='numeric'
-    value={values.cep}
-    onChangeText={handleChange('cep')}
-    onBlur={() => {
-      handleBlur('cep');
-      buscarCEP(values.cep);
-    }}
-    error={touched.cep && errors.cep ? true : false}
-  />
+            <TextInput
+              style={styles.input}
+              mode="outlined"
+              label="Cep"
+              keyboardType='numeric'
+              value={values.cep}
+              onChangeText={handleChange('cep')}
+              onBlur={() => {
+                handleBlur('cep');
+                buscarCEP(values.cep);
+              }}
+              error={touched.cep && errors.cep ? true : false}
+            />
 
               {touched.cep && errors.cep && (
                 <Text style={styles.errorText}>{errors.cep}</Text>
@@ -255,7 +269,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     margin: 10,
-    marginTop: 70
+    marginTop: 70,
   },
   inputContainer: {
     width: '90%',
