@@ -84,7 +84,6 @@ export default function ListaCarros({ navigation, route }) {
                 <Text variant='titleMedium'>{item?.marca}</Text>
                 <Text variant='bodyLarge'>Modelo: {item?.modelo}</Text>
                 <Text variant='bodyLarge'>Cor: {item?.cor}</Text>
-                {/* Aqui você pode adicionar mais informações sobre os carros */}
               </View>
             </Card.Content>
             <Card.Actions>

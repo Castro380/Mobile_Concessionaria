@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -9,11 +10,10 @@ import * as Yup from 'yup'
 export default function FormRevisoes({ navigation, route }) {
 
     const { acao, revisao: revisoesAntigas } = route.params
-    console.log(revisoesAntigas)
-
     const [nome, setNome] = useState('')
     const [cpf, setCpf] = useState('')
     const [telefone, setTelefone] = useState('')
+    const [usuarios, setUsuarios] = useState('')
     const [data, setData] = useState('')
 
     const validationSchema = Yup.object().shape({
@@ -32,6 +32,17 @@ export default function FormRevisoes({ navigation, route }) {
         }
     }, [])
 
+    useEffect(() => {
+        loadUsuarios()
+      }, [])
+    
+      async function loadUsuarios() {
+        const response = await AsyncStorage.getItem('usuarios')
+        console.log("🚀 ~ file: ListaUsuariosAsyncStorage.js:21 ~ loadUsuarios ~ response:", response)
+        const usuariosStorage = response ? JSON.parse(response) : []
+        setUsuarios(usuariosStorage)
+      }
+
     function salvar(novaRevisao) {
         console.log('SALVAR DADOS NOVA REVISÃO -> ', novaRevisao)
 
@@ -49,6 +60,7 @@ export default function FormRevisoes({ navigation, route }) {
         navigation.goBack()
     }
 
+    console.log(usuarios)
     return (
         <View style={styles.container}>
 

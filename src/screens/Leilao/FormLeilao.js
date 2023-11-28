@@ -31,6 +31,7 @@ export default function FormLeiloes({ navigation, route }) {
       setValor(leilaoAntigo.valor);
     }
   }, [leilaoAntigo]);
+
   
   function salvar(novoLeilao) {
     console.log('SALVAR DADOS NOVO LEILÃO -> ', novoLeilao);
@@ -92,6 +93,10 @@ export default function FormLeiloes({ navigation, route }) {
                 error={errors.imagem ? true : false}
               />
 
+              {touched.imagem && errors.imagem && (
+                <Text style={{ color: 'red', textAlign: 'center' }}>{errors.imagem}</Text>
+              )}
+
               <TextInput
                 style={styles.input}
                 mode='outlined'
@@ -101,6 +106,10 @@ export default function FormLeiloes({ navigation, route }) {
                 onBlur={handleBlur('nomeVendedor')}
                 error={errors.nomeVendedor ? true : false}
               />
+
+{touched.nomeVendedor && errors.nomeVendedor && (
+                <Text style={{ color: 'red', textAlign: 'center' }}>{errors.nomeVendedor}</Text>
+              )}
 
               <TextInput
                 style={styles.input}
@@ -113,6 +122,9 @@ export default function FormLeiloes({ navigation, route }) {
                 error={errors.contato ? true : false}
               />
 
+{touched.contato && errors.contato && (
+                <Text style={{ color: 'red', textAlign: 'center' }}>{errors.contato}</Text>
+              )}
               <TextInput
                 style={styles.input}
                 keyboardType='numeric'
@@ -124,7 +136,9 @@ export default function FormLeiloes({ navigation, route }) {
                 error={errors.valor ? true : false}
               />
 
-              {/* Adicione outros campos do leilão conforme necessário */}
+{touched.valor && errors.valor && (
+                <Text style={{ color: 'red', textAlign: 'center' }}>{errors.valor}</Text>
+              )}
 
             </View>
 

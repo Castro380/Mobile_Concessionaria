@@ -15,9 +15,10 @@ export default function FormCarrosFormularioAltoNivel({ navigation, route }) {
 
     const validationSchema = Yup.object().shape({
         marca: Yup.string().required('Campo obrigatório!'),
-        modelo: Yup.string().required('Campo obrigatório!'),
+        modelo: Yup.string().required('Campo obrigatório!').min(3, 'Coloque só 3'),
         cor: Yup.string().required('Campo obrigatório!'),
     })
+
 
     useEffect(() => {
         if (carroAntigo) {
@@ -26,6 +27,7 @@ export default function FormCarrosFormularioAltoNivel({ navigation, route }) {
             setCor(carroAntigo.cor)
         }
     }, [])
+    
     
     function salvar(novoCarro) {
         console.log('SALVAR DADOS NOVO CARRO -> ', novoCarro)
@@ -84,7 +86,15 @@ export default function FormCarrosFormularioAltoNivel({ navigation, route }) {
                                 value={values.modelo}
                                 onChangeText={handleChange('modelo')}
                                 onBlur={handleBlur('modelo')}
+                                error={errors.marca ? true : false}
+
                             />
+
+                            
+                            {touched.marca && errors.marca && (
+                                <Text style={{ color: 'red', textAlign: 'center' }}>{errors.marca}</Text>
+                            )}
+
 
                             <TextInput
                                 style={styles.input}
@@ -93,9 +103,13 @@ export default function FormCarrosFormularioAltoNivel({ navigation, route }) {
                                 value={values.cor}
                                 onChangeText={handleChange('cor')}
                                 onBlur={handleBlur('cor')}
+                                error={errors.cor ? true : false}
+
                             />
 
-                            {/* Adicione outros campos do carro conforme necessário */}
+                        {touched.cor && errors.cor && (
+                                <Text style={{ color: 'red', textAlign: 'center' }}>{errors.cor}</Text>
+                            )}
 
                         </View>
 

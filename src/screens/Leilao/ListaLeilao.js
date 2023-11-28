@@ -1,23 +1,38 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View, Image } from 'react-native';
 import { Button, Card, Dialog, FAB, Portal, Text } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 
 export default function ListaLeiloes({ navigation, route }) {
   const [leiloes, setLeiloes] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
   const [showModalExcluirLeilao, setShowModalExcluirLeilao] = useState(false);
   const [leilaoASerExcluido, setLeilaoASerExcluido] = useState(null);
 
   useEffect(() => {
     loadLeiloes();
+    loadUsuarios();
   }, []);
+
 
   async function loadLeiloes() {
     const response = await AsyncStorage.getItem('leiloes');
     const leiloesStorage = response ? JSON.parse(response) : [];
     setLeiloes(leiloesStorage);
   }
+
+  async function loadUsuarios() {
+    const response = await AsyncStorage.getItem('usuarios')
+    console.log("🚀 ~ file: ListaCarrosAsyncStorage.js:21 ~ loadCarros ~ response:", response)
+    const usuariosAsync = response ? JSON.parse(response) : []
+    setUsuarios(usuariosAsync)
+  }
+
+  const options = usuarios.map(pessoa => ({
+    value: pessoa.cpf, 
+    label: pessoa.nome
+  }));
 
   const showModal = () => setShowModalExcluirLeilao(true);
 
@@ -68,15 +83,14 @@ export default function ListaLeiloes({ navigation, route }) {
         data={leiloes}
         renderItem={({ item }) => (
           <Card mode='outlined' style={styles.card}>
+              <Card.Cover source={{ uri: item.imagem }} />
             <Card.Content style={styles.cardContent}>
               <View style={{ flex: 1 }}>
                 <Text variant='titleMedium'>{item?.marca}</Text>
                 <Text variant='bodyLarge'>Carro: {item?.carro}</Text>
-                <Text variant='bodyLarge'>Imagem: {item?.imagem}</Text>
                 <Text variant='bodyLarge'>Nome Vendedor: {item?.vendedor}</Text>
                 <Text variant='bodyLarge'>Contato: {item?.contato}</Text>
                 <Text variant='bodyLarge'>Valor: {item?.valor}</Text>
-                {/* Adicione mais informações sobre os leilões aqui */}
               </View>
             </Card.Content>
             <Card.Actions>

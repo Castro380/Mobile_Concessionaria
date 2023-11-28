@@ -15,7 +15,6 @@ export default function StackLeiloes() {
             <Stack.Screen name='ListaLeilao' component={ListaLeiloes} />
             <Stack.Screen name='FormLeilao' component={FormLeiloes} />
 
-
         </Stack.Navigator>
 
     )
