@@ -88,7 +88,7 @@ export default function ListaLeiloes({ navigation, route }) {
               <View style={{ flex: 1 }}>
                 <Text variant='titleMedium'>{item?.marca}</Text>
                 <Text variant='bodyLarge'>Carro: {item?.carro}</Text>
-                <Text variant='bodyLarge'>Nome Vendedor: {item?.vendedor}</Text>
+                <Text variant='bodyLarge'>Nome Vendedor: {item?.nomeVendedor}</Text>
                 <Text variant='bodyLarge'>Contato: {item?.contato}</Text>
                 <Text variant='bodyLarge'>Valor: {item?.valor}</Text>
               </View>

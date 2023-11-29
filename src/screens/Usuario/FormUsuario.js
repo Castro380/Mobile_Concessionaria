@@ -59,6 +59,7 @@ export default function FormUsuario({ navigation, route }) {
           bairro: data.bairro || enderecoInfo.bairro,
           cidade: data.localidade || enderecoInfo.cidade,
           estado: data.uf || enderecoInfo.estado,
+          nomeCompleto: nomeCompleto
         });
       } else {
         Toast.show({
@@ -121,7 +122,9 @@ export default function FormUsuario({ navigation, route }) {
                 mode="outlined"
                 label="Nome Completo"
                 value={values.nomeCompleto}
-                onChangeText={handleChange('nomeCompleto')}
+                onChangeText={(text) => {
+                  setNomeCompleto(text); 
+                }}
                 onBlur={handleBlur('nomeCompleto')}
                 error={touched.nomeCompleto && errors.nomeCompleto ? true : false}
 
@@ -135,7 +138,9 @@ export default function FormUsuario({ navigation, route }) {
                 mode="outlined"
                 label="CPF"
                 value={values.cpf}
-                onChangeText={handleChange('cpf')}
+                onChangeText={(text) => { 
+                  setCPF(text);
+                }}
                 onBlur={handleBlur('cpf')}
                 
                 error={touched.cpf && errors.cpf ? true : false}
@@ -155,7 +160,9 @@ export default function FormUsuario({ navigation, route }) {
                 mode="outlined"
                 label="Telefone"
                 value={values.telefone}
-                onChangeText={handleChange('telefone')}
+                onChangeText={(text) => {
+                  setTelefone(text);
+                }}
                 onBlur={handleBlur('telefone')}
                 error={touched.telefone && errors.telefone ? true : false}
                 render={props =>
@@ -174,7 +181,9 @@ export default function FormUsuario({ navigation, route }) {
                 mode="outlined"
                 label="Email"
                 value={values.email}
-                onChangeText={handleChange('email')}
+                onChangeText={(text) => {
+                  setEmail(text); 
+                }}
                 onBlur={handleBlur('email')}
                 error={touched.email && errors.email ? true : false}
               />
@@ -189,7 +198,9 @@ export default function FormUsuario({ navigation, route }) {
               label="Cep"
               keyboardType='numeric'
               value={values.cep}
-              onChangeText={handleChange('cep')}
+              onChangeText={(text) => {
+                setCEP(text); 
+              }}
               onBlur={() => {
                 handleBlur('cep');
                 buscarCEP(values.cep);
